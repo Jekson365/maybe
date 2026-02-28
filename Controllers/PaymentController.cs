@@ -11,7 +11,7 @@ using TappApi.Interfaces;
 
 namespace TappApi.Controllers;
 [ApiController]
-[Route("api/payment")]
+[Route("api/payments")]
 public class PaymentController : ControllerBase
 {
     public AppDbContext _db;
