@@ -5,7 +5,7 @@ on:
     branches: [ "master" ]
 
 env:
-  PROJECT_PATH: TappApi/TappApi.csproj
+  PROJECT_PATH: ./TappApi.csproj
   PUBLISH_DIR: publish
   SERVICE_NAME: maybe
   SERVER_APP_PATH: /var/www/maybe
