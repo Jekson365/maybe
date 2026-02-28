@@ -1,0 +1,43 @@
+name: .NET API
+
+on:
+  push:
+    branches: [ "master" ]
+
+env:
+  PROJECT_PATH: TappApi/TappApi.csproj
+  PUBLISH_DIR: publish
+  SERVICE_NAME: maybe
+  SERVER_APP_PATH: /var/www/maybe
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+
+    - run: dotnet restore $PROJECT_PATH
+    - run: dotnet build $PROJECT_PATH -c Release --no-restore
+    - run: dotnet publish $PROJECT_PATH -c Release -o $PUBLISH_DIR
+
+    - name: Upload to server
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        source: "${{ env.PUBLISH_DIR }}/*"
+        target: ${{ env.SERVER_APP_PATH }}
+
+    - name: Restart service
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        script: sudo systemctl restart maybe
