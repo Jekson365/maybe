@@ -7,7 +7,7 @@ on:
 env:
   PROJECT_PATH: ./TappApi.csproj
   PUBLISH_DIR: publish
-  SERVICE_NAME: maybe
+  SERVICE_NAME: tappapi
   SERVER_APP_PATH: /var/www/maybe/publish
 
 jobs:
@@ -43,5 +43,5 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         script: |
           systemctl daemon-reload
-          systemctl restart maybe
-          systemctl status maybe --no-pager -l
+          systemctl restart tappapi
+          systemctl status tappapi --no-pager -l
