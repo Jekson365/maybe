@@ -8,7 +8,7 @@ env:
   PROJECT_PATH: ./TappApi.csproj
   PUBLISH_DIR: publish
   SERVICE_NAME: maybe
-  SERVER_APP_PATH: /var/www/maybe
+  SERVER_APP_PATH: /var/www/maybe/publish
 
 jobs:
   build-deploy:
