@@ -7,8 +7,8 @@ on:
 env:
   PROJECT_PATH: ./TappApi.csproj
   PUBLISH_DIR: publish
-  SERVICE_NAME: maybe
-  SERVER_APP_PATH: /var/www/maybe
+  SERVICE_NAME: tappapi
+  SERVER_APP_PATH: /var/www/maybe/publish
 
 jobs:
   build-deploy:
@@ -33,6 +33,7 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         source: "${{ env.PUBLISH_DIR }}/*"
         target: ${{ env.SERVER_APP_PATH }}
+        strip_components: 1
 
     - name: Restart service
       uses: appleboy/ssh-action@v1.0.3
@@ -40,4 +41,7 @@ jobs:
         host: ${{ secrets.SERVER_IP }}
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SERVER_SSH_KEY }}
-        script: sudo systemctl restart maybe
+        script: |
+          systemctl daemon-reload
+          systemctl restart tappapi
+          systemctl status tappapi --no-pager -l
