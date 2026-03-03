@@ -8,17 +8,21 @@ using TappApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using TappApi.Services.Spotify;
 
 namespace TappApi.Controllers {
     [ApiController]
     [Route("api/users")]
-    public class UserController : ControllerBase {
+    public class UserController : ControllerBase
+    {
         private readonly AppDbContext _context;
         private readonly JwtService _jwt;
-        public UserController(AppDbContext context, JwtService jwt)
+        private readonly IConfiguration _config;
+        public UserController(AppDbContext context, JwtService jwt, IConfiguration config)
         {
             _context = context;
             _jwt = jwt;
+            _config = config;
         }
 
         [HttpGet]
@@ -31,14 +35,14 @@ namespace TappApi.Controllers {
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult> GetUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
-
+        
             if (user == null)
-                return NotFound();
+                throw new KeyNotFoundException("user not found ");
 
-            return user;
+            return Ok(user);
         }
 
         [HttpPost]
@@ -109,12 +113,19 @@ namespace TappApi.Controllers {
             Response.Cookies.Append("auth_token", token, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = true,       
+                Secure = true,
                 SameSite = SameSiteMode.Strict,
                 Expires = DateTime.UtcNow.AddMinutes(60)
             });
 
             return Ok(new { message = "Logged in" });
+        }
+        [HttpPost("search")]
+        public async Task<IActionResult> Search(SearchItemViewModel searchItem)
+        {
+            SpotifyService _spotifyService = new SpotifyService();  
+            var result = await _spotifyService.SearchForItem(searchItem,_config["secrets:spotifyToken"]);
+            return Ok(result);
         }
     }
 }
