@@ -40,7 +40,7 @@ namespace TappApi.Controllers {
             var user = await _context.Users.FindAsync(id);
         
             if (user == null)
-                throw new KeyNotFoundException("user not found ");
+                throw new KeyNotFoundException("user not found");
 
             return Ok(user);
         }

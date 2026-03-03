@@ -24,6 +24,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 var jwtKey = builder.Configuration["Jwt:Key"];
 
 builder.Services.AddScoped<IUserInterface, UserRepository>();
+builder.Services.AddScoped<ITaskInterface, TaskRepository>();
 builder.Services.AddScoped<JwtService>();
 
 

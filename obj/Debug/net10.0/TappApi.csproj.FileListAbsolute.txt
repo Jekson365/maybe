@@ -133,3 +133,5 @@ C:\Users\jekoe\OneDrive\Desktop\tapp\TappApi\obj\Debug\net10.0\refint\TappApi.dl
 C:\Users\jekoe\OneDrive\Desktop\tapp\TappApi\obj\Debug\net10.0\TappApi.pdb
 C:\Users\jekoe\OneDrive\Desktop\tapp\TappApi\obj\Debug\net10.0\TappApi.genruntimeconfig.cache
 C:\Users\jekoe\OneDrive\Desktop\tapp\TappApi\obj\Debug\net10.0\ref\TappApi.dll
+C:\Users\jekoe\OneDrive\Desktop\tapp\TappApi\bin\Debug\net10.0\langs\en.json
+C:\Users\jekoe\OneDrive\Desktop\tapp\TappApi\bin\Debug\net10.0\langs\ka.json

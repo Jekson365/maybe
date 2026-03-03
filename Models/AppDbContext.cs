@@ -6,4 +6,5 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 {
     public DbSet<TodoItem> TodoItems => Set<TodoItem>();
     public DbSet<User> Users => Set<User>();
+    public DbSet<TaskItem> Tasks => Set<TaskItem>();
 }
